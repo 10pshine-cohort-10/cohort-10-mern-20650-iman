@@ -1,0 +1,19 @@
+{
+  "name": "cohort-10-mern-20650-iman",
+  "version": "1.0.0",
+  "description": "Full-stack Notes App (MERN with TypeScript: MongoDB + Express + React + Node)",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
