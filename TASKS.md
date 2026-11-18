@@ -72,13 +72,13 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 ## T0 — Repo, Docker & project setup
 **Branch:** `chore/project-setup`
 
-- [ ] Save initial docs on `main`, push to GitHub fork
-- [ ] Create `develop` from `main`, push it, set as working base
-- [ ] Create folders `backend/` and `frontend/`
-- [ ] Root `.gitignore`: `node_modules`, `.env`, `logs`, `coverage`, `dist`, `build`
-- [ ] `docker-compose.yml` with MongoDB (volume for data)
+- [x] Save initial docs on `main`, push to GitHub fork
+- [x] Create `develop` from `main`, push it, set as working base
+- [x] Create folders `backend/` and `frontend/`
+- [x] Root `.gitignore`: `node_modules`, `.env`, `logs`, `coverage`, `dist`, `build`
+- [x] `docker-compose.yml` with MongoDB (volume for data)
 - [ ] Verify Docker Desktop (WSL2) works: `docker compose up -d` then check Mongo is running
-- [ ] ESLint + Prettier config at repo root with TypeScript support
+- [x] ESLint + Prettier config at repo root with TypeScript support
 - [ ] Open your **first PR** `chore/project-setup` → `develop` and merge it
 
 **Commits:** `chore: init repository and docs` · `chore: add gitignore and folder structure` · `chore: add docker compose for mongodb` · `chore: add eslint and prettier`
