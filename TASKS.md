@@ -42,10 +42,10 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 
 | ID | Task | Branch | Status |
 |----|------|--------|--------|
-| T0 | Repo, Docker & project setup | `chore/project-setup` | 🟡 IN PROGRESS (waiting for "go") |
-| T1 | Backend skeleton + Pino logger (TS) | `feature/backend-skeleton-logging` | ⬜ LOCKED |
-| T2 | Global exception handling (TS) | `feature/global-error-handling` | ⬜ LOCKED |
-| T3 | MongoDB connection + models (TS) | `feature/mongodb-models` | ⬜ LOCKED |
+| T0 | Repo, Docker & project setup | `chore/project-setup` | ✅ DONE |
+| T1 | Backend skeleton + Pino logger (TS) | `feature/backend-skeleton-logging` | ✅ DONE |
+| T2 | Global exception handling (TS) | `feature/global-error-handling` | ✅ DONE |
+| T3 | MongoDB connection + models (TS) | `feature/mongodb-models` | 🟡 IN PROGRESS (next up) |
 | T4 | Auth backend (httpOnly cookie) | `feature/auth-backend` | ⬜ LOCKED |
 | T5 | Notes CRUD + soft delete backend | `feature/notes-crud-backend` | ⬜ LOCKED |
 | T6 | Backend unit tests (Mocha/Chai/TS) | `test/backend-unit-tests` | ⬜ LOCKED |
@@ -89,16 +89,16 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 ## T1 — Backend skeleton + Pino logger (TypeScript)
 **Branch:** `feature/backend-skeleton-logging`
 
-- [ ] `npm init` in `backend/`; install `express dotenv cors helmet cookie-parser pino pino-http pino-pretty`
-- [ ] Install TypeScript & types: `typescript tsx @types/node @types/express @types/cors @types/cookie-parser @types/pino-http`
-- [ ] Backend `tsconfig.json` (strict: true, es2022/NodeNext)
-- [ ] `src/app.ts` and `src/server.ts` (separate)
-- [ ] `src/config/env.ts` + `.env.example`
-- [ ] `src/logger/index.ts` (levels, redaction of cookie/authorization/password)
-- [ ] `pino-http` middleware (typed request + response logs, request id)
-- [ ] CORS with `credentials: true` and the frontend origin
-- [ ] `GET /api/health`
-- [ ] Graceful shutdown logging
+- [x] `npm init` in `backend/`; install `express dotenv cors helmet cookie-parser pino pino-http pino-pretty`
+- [x] Install TypeScript & types: `typescript tsx @types/node @types/express @types/cors @types/cookie-parser @types/pino-http`
+- [x] Backend `tsconfig.json` (strict: true, es2022/NodeNext)
+- [x] `src/app.ts` and `src/server.ts` (separate)
+- [x] `src/config/env.ts` + `.env.example`
+- [x] `src/logger/index.ts` (levels, redaction of cookie/authorization/password)
+- [x] `pino-http` middleware (typed request + response logs, request id)
+- [x] CORS with `credentials: true` and the frontend origin
+- [x] `GET /api/health`
+- [x] Graceful shutdown logging
 
 **Commits:** `chore: init backend with typescript` · `feat: express app and server` · `feat: pino logger` · `feat: http request logging`
 **Done when:** `npm run dev` starts via `tsx`, `/api/health` returns 200, requests show in logs.
@@ -108,12 +108,12 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 ## T2 — Global exception handling (TypeScript)
 **Branch:** `feature/global-error-handling`
 
-- [ ] `utils/AppError.ts`, `utils/asyncHandler.ts` (strictly typed with `Request`, `Response`, `NextFunction`)
-- [ ] `middleware/notFound.ts` (404)
-- [ ] `middleware/errorHandler.ts` (logs with Pino, consistent JSON, no stack in prod)
-- [ ] Map Mongoose `ValidationError`, duplicate key `11000`, `CastError`, JWT errors
-- [ ] Process-level `unhandledRejection` / `uncaughtException` logging
-- [ ] Temporary test route that throws, to prove it works
+- [x] `utils/AppError.ts`, `utils/asyncHandler.ts` (strictly typed with `Request`, `Response`, `NextFunction`)
+- [x] `middleware/notFound.ts` (404)
+- [x] `middleware/errorHandler.ts` (logs with Pino, consistent JSON, no stack in prod)
+- [x] Map Mongoose `ValidationError`, duplicate key `11000`, `CastError`, JWT errors
+- [x] Process-level `unhandledRejection` / `uncaughtException` logging
+- [x] Temporary test route that throws, to prove it works
 
 **Commits:** `feat: AppError and asyncHandler` · `feat: notFound and error handler` · `feat: map mongoose and jwt errors` · `feat: process level error logging`
 **Done when:** any thrown error returns the standard JSON and appears as an `error` log.
