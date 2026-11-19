@@ -45,8 +45,8 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 | T0 | Repo, Docker & project setup | `chore/project-setup` | ✅ DONE |
 | T1 | Backend skeleton + Pino logger (TS) | `feature/backend-skeleton-logging` | ✅ DONE |
 | T2 | Global exception handling (TS) | `feature/global-error-handling` | ✅ DONE |
-| T3 | MongoDB connection + models (TS) | `feature/mongodb-models` | 🟡 IN PROGRESS (next up) |
-| T4 | Auth backend (httpOnly cookie) | `feature/auth-backend` | ⬜ LOCKED |
+| T3 | MongoDB connection + models (TS) | `feature/mongodb-models` | ✅ DONE |
+| T4 | Auth backend (httpOnly cookie) | `feature/auth-backend` | 🟡 IN PROGRESS (next up) |
 | T5 | Notes CRUD + soft delete backend | `feature/notes-crud-backend` | ⬜ LOCKED |
 | T6 | Backend unit tests (Mocha/Chai/TS) | `test/backend-unit-tests` | ⬜ LOCKED |
 | T7 | Frontend scaffold (Vite + React + TS + Tailwind) | `feature/frontend-scaffold` | ⬜ LOCKED |
@@ -123,12 +123,12 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 ## T3 — MongoDB connection + models (TypeScript)
 **Branch:** `feature/mongodb-models`
 
-- [ ] Install `mongoose @types/mongoose`; `config/db.ts` connecting to the Docker Mongo
-- [ ] Log connection success / failure / disconnect
-- [ ] `models/User.ts` (IUser interface, schema, name, email unique, passwordHash `select:false`, timestamps)
-- [ ] `models/Note.ts` (INote interface, schema, user, title, content, plainText, pinned, color, tags, shareToken, isShared, deletedAt, timestamps)
-- [ ] Indexes from PROJECT_PLAN §5, including the **30-day TTL index on `deletedAt`**
-- [ ] Health check reports DB status
+- [x] Install `mongoose @types/mongoose`; `config/db.ts` connecting to the Docker Mongo
+- [x] Log connection success / failure / disconnect
+- [x] `models/User.ts` (IUser interface, schema, name, email unique, passwordHash `select:false`, timestamps)
+- [x] `models/Note.ts` (INote interface, schema, user, title, content, plainText, pinned, color, tags, shareToken, isShared, deletedAt, timestamps)
+- [x] Indexes from PROJECT_PLAN §5, including the **30-day TTL index on `deletedAt`**
+- [x] Health check reports DB status
 
 **Commits:** `feat: mongoose connection` · `feat: user model and interfaces` · `feat: note model with indexes` · `feat: db status in health check`
 **Done when:** app connects on startup and both collections/indexes are created.

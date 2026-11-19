@@ -7,6 +7,7 @@ import { requestLogger } from "./middleware/requestLogger.js";
 import { notFound } from "./middleware/notFound.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { AppError } from "./utils/AppError.js";
+import { getDBStatus } from "./config/db.js";
 
 const app: Application = express();
 
@@ -29,12 +30,14 @@ app.use(requestLogger);
 
 // Health check endpoint
 app.get("/api/health", (_req: Request, res: Response) => {
+  const dbStatus = getDBStatus();
   res.status(200).json({
     success: true,
     message: "Notes API is running smoothly",
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: env.nodeEnv,
+    database: dbStatus,
   });
 });
 
