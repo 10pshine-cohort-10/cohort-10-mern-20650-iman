@@ -42,7 +42,7 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 
 | ID | Task | Branch | Status |
 |----|------|--------|--------|
-| T0 | Repo, Docker & project setup | `chore/project-setup` | ✅ DONE |
+| T0 | Repo, Docker & project setup | `chore/project-setup` | 🟡 PR OPEN |
 | T1 | Backend skeleton + Pino logger (TS) | `feature/backend-skeleton-logging` | ✅ DONE |
 | T2 | Global exception handling (TS) | `feature/global-error-handling` | ✅ DONE |
 | T3 | MongoDB connection + models (TS) | `feature/mongodb-models` | 🟡 IN PROGRESS (next up) |
@@ -77,7 +77,7 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 - [x] Create folders `backend/` and `frontend/`
 - [x] Root `.gitignore`: `node_modules`, `.env`, `logs`, `coverage`, `dist`, `build`
 - [x] `docker-compose.yml` with MongoDB (volume for data)
-- [ ] Verify Docker Desktop (WSL2) works: `docker compose up -d` then check Mongo is running
+- [x] Verify Docker Desktop (WSL2) works: `docker compose up -d` then check Mongo is running
 - [x] ESLint + Prettier config at repo root with TypeScript support
 - [ ] Open your **first PR** `chore/project-setup` → `develop` and merge it
 
@@ -376,8 +376,9 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 
 - [ ] README: overview, features, setup on Windows, env vars, scripts, API table, screenshots
 - [ ] How to run tests and SonarQube
-- [ ] Open PR `develop` → `main` and merge
-- [ ] Tag `v1.0.0`
+- [ ] Open PR `docs/readme-and-release` → `develop` and merge it
+- [ ] Open release PR `develop` → `main` and merge
+- [ ] Tag `v1.0.0` on `main`
 
 **Commits:** `docs: readme` · `docs: api reference` · `chore: release v1.0.0`
 **Done when:** a new person can clone, follow the README, and run the app.

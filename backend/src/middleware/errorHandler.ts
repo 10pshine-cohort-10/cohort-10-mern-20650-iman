@@ -19,6 +19,13 @@ interface MongooseValidationError extends Error {
   errors: Record<string, { message: string; path: string }>;
 }
 
+interface BodyParserError extends Error {
+  status?: number;
+  statusCode?: number;
+  body?: string;
+  type?: string;
+}
+
 export const errorHandler: ErrorRequestHandler = (
   err: Error | AppError,
   req: Request,
@@ -31,12 +38,29 @@ export const errorHandler: ErrorRequestHandler = (
   let message = "An unexpected error occurred. Please try again later.";
   let details: unknown = undefined;
 
+  const parserErr = err as BodyParserError;
+  const parsedStatus = parserErr.status ?? parserErr.statusCode;
+
   // Handle our custom AppError
   if (err instanceof AppError) {
     statusCode = err.statusCode;
     code = err.code;
     message = err.message;
     details = err.details;
+  }
+  // Body parser errors (malformed JSON or payload too large)
+  else if (typeof parsedStatus === "number" && parsedStatus >= 400 && parsedStatus < 500) {
+    statusCode = parsedStatus;
+    if (parsedStatus === 400) {
+      code = "MALFORMED_JSON";
+      message = "Invalid JSON payload in request body.";
+    } else if (parsedStatus === 413) {
+      code = "PAYLOAD_TOO_LARGE";
+      message = "Request payload exceeds allowed limit.";
+    } else {
+      code = "BAD_REQUEST";
+      message = err.message || "Invalid request.";
+    }
   }
   // Mongoose CastError (invalid ObjectId)
   else if (err.name === "CastError") {
@@ -73,11 +97,13 @@ export const errorHandler: ErrorRequestHandler = (
     message = "Authentication token expired. Please log in again.";
   }
 
-  // Log error using Pino
+  // Safe error logging: strip raw body string to prevent sensitive credential exposure
   if (statusCode >= 500) {
     logger.error(
       {
-        err,
+        errorName: err.name,
+        errorMessage: err.message,
+        stack: err.stack,
         method: req.method,
         url: req.originalUrl,
         requestId: req.id,
@@ -97,14 +123,14 @@ export const errorHandler: ErrorRequestHandler = (
     );
   }
 
-  // Response payload
+  // Response payload (stack trace exposed strictly in development mode)
   res.status(statusCode).json({
     success: false,
     error: {
       code,
       message,
       ...(details !== undefined && { details }),
-      ...(env.nodeEnv !== "production" && { stack: err.stack }),
+      ...(env.nodeEnv === "development" && { stack: err.stack }),
     },
   });
 };

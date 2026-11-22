@@ -142,7 +142,7 @@ cohort-10-mern-20650-iman/
 | `pinned` | Boolean | default false |
 | `color` | String | one of a fixed palette, default `"default"` |
 | `tags` | [String] | lowercase, trimmed, max ~10 per note |
-| `shareToken` | String | random, unique + sparse, `null` when not shared |
+| `shareToken` | String | optional, unique token string when shared (field omitted when unshared to prevent null collisions) |
 | `isShared` | Boolean | default false |
 | `deletedAt` | Date | `null` = active, date = in trash |
 | `createdAt` / `updatedAt` | Date | timestamps |
@@ -152,7 +152,7 @@ cohort-10-mern-20650-iman/
 - `{ user: 1, deletedAt: 1, pinned: -1, updatedAt: -1 }` — dashboard listing
 - `{ user: 1, tags: 1 }` — tag filter
 - text index on `title` + `plainText` — search
-- `{ shareToken: 1 }` unique sparse — public link lookup
+- `{ shareToken: 1 }` unique with partial filter expression `{ shareToken: { $type: "string" } }` (or omitted when unshared) — public link lookup
 - **TTL index** on `deletedAt` with `expireAfterSeconds: 2592000` (30 days) — MongoDB itself permanently deletes trashed notes after a month. Documents where `deletedAt` is `null` are never expired.
 
 ### Soft delete rules (Q14)
