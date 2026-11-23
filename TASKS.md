@@ -42,7 +42,7 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 
 | ID | Task | Branch | Status |
 |----|------|--------|--------|
-| T0 | Repo, Docker & project setup | `chore/project-setup` | 🟡 PR OPEN |
+| T0 | Repo, Docker & project setup | `chore/project-setup` | 🟡 IN PROGRESS (PR #1 open) |
 | T1 | Backend skeleton + Pino logger (TS) | `feature/backend-skeleton-logging` | ✅ DONE |
 | T2 | Global exception handling (TS) | `feature/global-error-handling` | ✅ DONE |
 | T3 | MongoDB connection + models (TS) | `feature/mongodb-models` | 🟡 IN PROGRESS (next up) |
@@ -77,7 +77,7 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 - [x] Create folders `backend/` and `frontend/`
 - [x] Root `.gitignore`: `node_modules`, `.env`, `logs`, `coverage`, `dist`, `build`
 - [x] `docker-compose.yml` with MongoDB (volume for data)
-- [x] Verify Docker Desktop (WSL2) works: `docker compose up -d` then check Mongo is running
+- [ ] Verify Docker Desktop (WSL2) works: `docker compose up -d` then check Mongo is running
 - [x] ESLint + Prettier config at repo root with TypeScript support
 - [ ] Open your **first PR** `chore/project-setup` → `develop` and merge it
 
