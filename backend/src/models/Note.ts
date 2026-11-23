@@ -25,7 +25,7 @@ export interface INote extends Document {
   pinned: boolean;
   color: NoteColor;
   tags: string[];
-  shareToken: string | null;
+  shareToken?: string | null;
   isShared: boolean;
   deletedAt: Date | null;
   createdAt: Date;
@@ -74,7 +74,7 @@ const noteSchema = new Schema<INote>(
     },
     shareToken: {
       type: String,
-      default: undefined,
+      default: null,
     },
     isShared: {
       type: Boolean,
