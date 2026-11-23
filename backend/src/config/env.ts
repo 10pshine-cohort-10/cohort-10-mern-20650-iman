@@ -17,7 +17,7 @@ const rawNodeEnv = process.env.NODE_ENV;
 const nodeEnv: EnvConfig["nodeEnv"] =
   rawNodeEnv && validNodeEnvs.includes(rawNodeEnv as (typeof validNodeEnvs)[number])
     ? (rawNodeEnv as EnvConfig["nodeEnv"])
-    : "development";
+    : "production";
 
 export const env: EnvConfig = {
   nodeEnv,
