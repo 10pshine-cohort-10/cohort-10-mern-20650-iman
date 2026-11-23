@@ -10,10 +10,18 @@ const server: Server = app.listen(env.port, () => {
 });
 
 let isShuttingDown = false;
+let exitStatusCode = 0;
 
 // Unified, idempotent graceful shutdown with forced timeout deadline
 const shutdown = (trigger: string, exitCode: number): void => {
-  if (isShuttingDown) return;
+  if (exitCode !== 0) {
+    exitStatusCode = exitCode;
+  }
+
+  if (isShuttingDown) {
+    logger.warn(`Shutdown already in progress. Retained failure exit code ${exitStatusCode} from ${trigger}.`);
+    return;
+  }
   isShuttingDown = true;
 
   logger.info(`Shutting down initiated by ${trigger} (exit code ${exitCode}). Closing HTTP server...`);
@@ -21,7 +29,7 @@ const shutdown = (trigger: string, exitCode: number): void => {
   // Enforce 10-second deadline for in-flight requests on signals and unhandled rejections
   const forceExitTimer = setTimeout(() => {
     logger.error("Could not close connections in time, forcefully shutting down");
-    process.exit(exitCode !== 0 ? exitCode : 1);
+    process.exit(exitStatusCode !== 0 ? exitStatusCode : 1);
   }, 10000);
   forceExitTimer.unref();
 
@@ -31,7 +39,7 @@ const shutdown = (trigger: string, exitCode: number): void => {
       process.exit(1);
     }
     logger.info("HTTP server closed. Exiting process.");
-    process.exit(exitCode);
+    process.exit(exitStatusCode);
   });
 };
 

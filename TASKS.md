@@ -79,7 +79,7 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 - [x] `docker-compose.yml` with MongoDB (volume for data)
 - [ ] Verify Docker Desktop (WSL2) works: `docker compose up -d` then check Mongo is running
 - [x] ESLint + Prettier config at repo root with TypeScript support
-- [ ] Open your **first PR** `chore/project-setup` → `develop` and merge it
+- [ ] Open your **first PR** `chore/project-setup` → `develop` (retarget from `main` to `develop` on GitHub; if organization repository settings require targeting `main`, document upstream base constraint) and merge it
 
 **Commits:** `chore: init repository and docs` · `chore: add gitignore and folder structure` · `chore: add docker compose for mongodb` · `chore: add eslint and prettier`
 **Done when:** `develop` exists on GitHub, Mongo container runs, first PR is merged.
