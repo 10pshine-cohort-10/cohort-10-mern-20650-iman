@@ -18,7 +18,7 @@ const shutdown = (trigger: string, exitCode: number): void => {
 
   logger.info(`Shutting down initiated by ${trigger} (exit code ${exitCode}). Closing HTTP server...`);
 
-  // Enforce 10-second deadline for in-flight requests
+  // Enforce 10-second deadline for in-flight requests on signals and unhandled rejections
   const forceExitTimer = setTimeout(() => {
     logger.error("Could not close connections in time, forcefully shutting down");
     process.exit(exitCode !== 0 ? exitCode : 1);
