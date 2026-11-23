@@ -26,6 +26,15 @@ interface BodyParserError extends Error {
   type?: string;
 }
 
+const isBodyParserError = (error: unknown): error is BodyParserError => {
+  if (typeof error !== "object" || error === null) {
+    return false;
+  }
+  const candidate = error as Record<string, unknown>;
+  const hasStatus = typeof candidate.status === "number" || typeof candidate.statusCode === "number";
+  return hasStatus && typeof candidate.type === "string";
+};
+
 export const errorHandler: ErrorRequestHandler = (
   err: Error | AppError,
   req: Request,
@@ -38,9 +47,6 @@ export const errorHandler: ErrorRequestHandler = (
   let message = "An unexpected error occurred. Please try again later.";
   let details: unknown = undefined;
 
-  const parserErr = err as BodyParserError;
-  const parsedStatus = parserErr.status ?? parserErr.statusCode;
-
   // Handle our custom AppError
   if (err instanceof AppError) {
     statusCode = err.statusCode;
@@ -48,13 +54,17 @@ export const errorHandler: ErrorRequestHandler = (
     message = err.message;
     details = err.details;
   }
-  // Body parser errors (malformed JSON or payload too large)
-  else if (typeof parsedStatus === "number" && parsedStatus >= 400 && parsedStatus < 500) {
-    statusCode = parsedStatus;
-    if (parsedStatus === 400) {
-      code = "MALFORMED_JSON";
-      message = "Invalid JSON payload in request body.";
-    } else if (parsedStatus === 413) {
+  // Body parser errors (malformed JSON or oversized body)
+  else if (isBodyParserError(err)) {
+    const parserStatus = err.status ?? err.statusCode ?? 400;
+    statusCode = parserStatus;
+
+    if (err.type === "entity.parse.failed" || parserStatus === 400) {
+      statusCode = 400;
+      code = "INVALID_JSON";
+      message = "Request body contains invalid JSON.";
+    } else if (err.type === "entity.too.large" || parserStatus === 413) {
+      statusCode = 413;
       code = "PAYLOAD_TOO_LARGE";
       message = "Request payload exceeds allowed limit.";
     } else {
@@ -101,9 +111,11 @@ export const errorHandler: ErrorRequestHandler = (
   if (statusCode >= 500) {
     logger.error(
       {
-        errorName: err.name,
-        errorMessage: err.message,
-        stack: err.stack,
+        err: {
+          name: err.name,
+          message: err.message,
+          stack: err.stack,
+        },
         method: req.method,
         url: req.originalUrl,
         requestId: req.id,
