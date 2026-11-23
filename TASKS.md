@@ -376,9 +376,10 @@ Commit prefixes: `feat` · `fix` · `test` · `docs` · `chore` · `refactor`
 
 - [ ] README: overview, features, setup on Windows, env vars, scripts, API table, screenshots
 - [ ] How to run tests and SonarQube
-- [ ] Open PR `docs/readme-and-release` → `develop` and merge it
-- [ ] Open release PR `develop` → `main` and merge
-- [ ] Tag `v1.0.0` on `main`
+- [ ] Open a PR `docs/readme-and-release` → `develop` and merge it
+- [ ] Open a PR `develop` → `main` and merge it
+- [ ] Tag `v1.0.0` on the resulting main commit
+- [ ] Open the final submission PR to the upstream repository, then notify the supervisor
 
 **Commits:** `docs: readme` · `docs: api reference` · `chore: release v1.0.0`
 **Done when:** a new person can clone, follow the README, and run the app.
