@@ -107,7 +107,7 @@ export const errorHandler: ErrorRequestHandler = (
     message = "Authentication token expired. Please log in again.";
   }
 
-  // Safe error logging: strip raw body string to prevent sensitive credential exposure
+  // Safe error logging (CWE-532): only log name, message, stack. Never log raw body.
   if (statusCode >= 500) {
     logger.error(
       {
